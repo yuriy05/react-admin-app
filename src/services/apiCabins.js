@@ -12,7 +12,6 @@ export async function getCabins() {
 }
 
 export async function createEditCabin(newCabin, id) {
-  console.log(newCabin, id);
   const hasImagePath = newCabin.image?.startsWith?.(
     import.meta.env.VITE_SUPABASE_URL
   );
@@ -31,8 +30,7 @@ export async function createEditCabin(newCabin, id) {
 
   // A). Create
 
-  if (!id)
-    query = query.insert([{ ...newCabin, image: imagePath }]);
+  if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
 
   // B). Edit
 
@@ -45,6 +43,8 @@ export async function createEditCabin(newCabin, id) {
     throw new Error("Cabin could not be created");
   }
   // 2. Upload image
+
+  if (hasImagePath) return data;
 
   const { error: storageError } = await supabase.storage
     .from("cabin-images")
