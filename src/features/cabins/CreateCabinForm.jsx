@@ -20,7 +20,7 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
 
@@ -42,14 +42,20 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       editCabin(
         { newCabinData: { ...data, image }, id: editId },
         {
-          onSuccess: () => reset()
+          onSuccess: data => {
+            reset();
+            onCloseModal?.();
+          }
         }
       );
     else
       createCabin(
         { ...data, image },
         {
-          onSuccess: () => reset()
+          onSuccess: data => {
+            reset();
+            onCloseModal?.();
+          }
         }
       );
   }
@@ -59,7 +65,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      type={onCloseModal ? "modal" : "regular"}
+    >
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -108,9 +117,14 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           defaultValue={0}
           {...register("discount", {
             required: "This field is required",
-            validate: value =>
-              value <= getValues().regularPrice ||
-              "Discount should be less than regular price"
+            validate: value => {
+              const discount = Number(value);
+              const regularPrice = Number(getValues().regularPrice);
+              return (
+                discount < regularPrice ||
+                "Discount should be less than regular price"
+              );
+            }
           })}
           disabled={isWorking}
         />
@@ -141,7 +155,11 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
         <Button disabled={isWorking}>
