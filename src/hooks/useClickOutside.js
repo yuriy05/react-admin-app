@@ -11,9 +11,9 @@ export function useClickOutside(handler, liveCapturing = true) {
         }
       }
 
-      document.addEventListener("click", handleClick, true);
+      document.addEventListener("click", handleClick, liveCapturing);
 
-      return () => document.removeEventListener("click", handleClick, true);
+      return () => document.removeEventListener("click", handleClick, liveCapturing);
     },
     [handler, liveCapturing]
   );
