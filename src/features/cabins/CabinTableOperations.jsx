@@ -17,7 +17,7 @@ function CabinTableOperations() {
           },
           {
             value: "with-discount",
-            label: "With discpunt"
+            label: "With discount"
           }
         ]}
       />
