@@ -19,14 +19,20 @@ function CabinTable() {
   }
 
   if (filterValue === "no-discount") {
-    filteredCabins = cabins.filter((cabin) => cabin.discount === 0);
+    filteredCabins = cabins?.filter(cabin => cabin.discount === 0);
   }
 
   if (filterValue === "with-discount") {
-    filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
+    filteredCabins = cabins?.filter(cabin => cabin.discount > 0);
   }
 
-  console.log(filterValue);
+  const sortBy = searchParams.get("sortBy") || "startDate-asc";
+  const [field, direction] = sortBy.split("-");
+
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortedCabins = filteredCabins?.sort(
+    (a, b) => (a[field] - b[field]) * modifier
+  );
 
   if (isLoading) return <Spinner />;
 
@@ -42,7 +48,7 @@ function CabinTable() {
           <div></div>
         </Table.Header>
         <Table.Body
-          data={filteredCabins}
+          data={sortedCabins}
           render={cabin => <CabinRow cabin={cabin} key={cabin.id} />}
         />
       </Table>
