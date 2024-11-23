@@ -44,14 +44,14 @@ function BookingRow({
     numGuests,
     totalPrice,
     status,
-    guests: { fullName: guestName, email },
-    cabins: { name: cabinName },
-  },
+    Guests: { fullName: guestName, email },
+    Cabins: { name: cabinName }
+  }
 }) {
   const statusToTagName = {
     unconfirmed: "blue",
     "checked-in": "green",
-    "checked-out": "silver",
+    "checked-out": "silver"
   };
 
   return (
