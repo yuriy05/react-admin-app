@@ -67,7 +67,7 @@ const StyledButton = styled.button`
 
 const MenusContext = createContext();
 
-function Menus({ children, e }) {
+function Menus({ children }) {
   const [openId, setOpenId] = useState("");
   const [position, setPosition] = useState(null);
 
@@ -89,7 +89,7 @@ function Toggle({ id }) {
 
   function handleClick(e) {
     const rect = e.target.closest("button").getBoundingClientRect();
-    console.log(rect);
+
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
       y: rect.y + rect.height + 8
@@ -97,8 +97,6 @@ function Toggle({ id }) {
 
     openId === "" || openId !== id ? open(id) : close();
   }
-
-  useClickOutside(handleClick);
 
   return (
     <StyledToggle onClick={handleClick}>
