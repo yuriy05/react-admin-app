@@ -18,6 +18,7 @@ import ProtectedRoute from "./ui/ProtectedRoute";
 import PageNotFound from "./pages/PageNotFound";
 import Booking from "./pages/Booking";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
+import { useState } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
