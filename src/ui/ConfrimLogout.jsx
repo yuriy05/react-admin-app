@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import Heading from "../../ui/Heading";
-import Button from "../../ui/Button";
+import Heading from "./Heading";
+import Button from "./Button";
 
 const StyledConfirmLogout = styled.div`
   display: flex;

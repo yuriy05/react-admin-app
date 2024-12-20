@@ -3,7 +3,7 @@ import ButtonIcon from "../../ui/ButtonIcon";
 import { useLogout } from "./useLogout";
 import SpinnerMini from "../../ui/SpinnerMini";
 import Modal from "../../ui/Modal";
-import ConfirmLogout from "./ConfrimLogout";
+import ConfirmLogout from "../../ui/ConfrimLogout";
 
 function Logout() {
   const { logout, isLoading: isLogout } = useLogout();
